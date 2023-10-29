@@ -1,17 +1,12 @@
 require_relative 'lib/node'
 require_relative 'lib/bst'
 
-# def pretty_print(node = @root, prefix = '', is_left: false)
-#   pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
-#   puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
-#   pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
-# end
-
 bst = Tree.new
 
-(20..30).each { |k| bst.insert(k) }
+20.times do 
+  k = rand(200)
+  bst.insert(k) 
+end
 
-(10..20).reverse_each { |k| bst.insert(k) }
-
-p bst
+bst.pretty_print()
 # pretty_print(bst)
