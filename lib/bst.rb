@@ -7,6 +7,17 @@ class Tree
     @root = Node.new
   end
 
+  def build_tree(list)
+    l = list.sort.uniq
+    n = l.length
+    return 'Empty list' if l.empty?
+    if l.length == 1
+      insert(l[0])
+    else
+      [l1, l2] = l[0...(n/2)], l[(n/2)...n]
+      # mbola ts vita ti
+  end
+
   def insert(value, node = @root)
     if node.data.nil?
       node.data = value
