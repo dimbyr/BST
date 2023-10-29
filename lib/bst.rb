@@ -10,7 +10,7 @@ class Tree
   def insert(value)
     current_node = @root
     if current_node.data.nil?
-      @root.data = value
+      current_node.data = value
     else
       until current_node.left.nil? || current_node.right.nil?
         current_node = current_node.left until current_node.left.nil? || current_node.data < value
