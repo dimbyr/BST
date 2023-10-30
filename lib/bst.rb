@@ -14,7 +14,8 @@ class Tree
     if l.length == 1
       insert(l[0])
     else
-      [l1, l2] = l[0...(n/2)], l[(n/2)...n]
+      l1 = l[0...(n/2)] 
+      l2 = l[(n/2)...n]
       # mbola ts vita ti
   end
 
