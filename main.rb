@@ -9,7 +9,7 @@ bst = BinaryTree.new
   bst.insert(k) 
 end
 
-ls = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+ls = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 33, 23, 13, 11, 12]
 tree = Tree.new(ls)
 
 tree.pretty_print
