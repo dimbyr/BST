@@ -1,12 +1,17 @@
 require_relative 'lib/node'
 require_relative 'lib/bst'
+require_relative 'lib/tree'
 
-bst = Tree.new
+bst = BinaryTree.new
 
 20.times do 
   k = rand(200)
   bst.insert(k) 
 end
 
-bst.pretty_print()
+ls = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+tree = Tree.new(ls)
+
+tree.pretty_print
+# bst.pretty_print()
 # pretty_print(bst)

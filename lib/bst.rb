@@ -1,23 +1,23 @@
 require_relative 'node'
 
-class Tree 
+class BinaryTree 
   attr_accessor :root
 
   def initialize
     @root = Node.new
   end
 
-  def build_tree(list)
-    l = list.sort.uniq
-    n = l.length
-    return 'Empty list' if l.empty?
-    if l.length == 1
-      insert(l[0])
-    else
-      l1 = l[0...(n/2)] 
-      l2 = l[(n/2)...n]
-      # mbola ts vita ti
-  end
+  # def build_tree(list)
+  #   l = list.sort.uniq
+  #   n = l.length
+  #   return 'Empty list' if l.empty?
+  #   if l.length == 1
+  #     insert(l[0])
+  #   else
+  #     l1 = l[0...(n/2)] 
+  #     l2 = l[(n/2)...n]
+  #     # mbola ts vita ti
+  # end
 
   def insert(value, node = @root)
     if node.data.nil?
