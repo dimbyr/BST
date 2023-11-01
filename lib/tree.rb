@@ -40,23 +40,17 @@ class Tree
     node = walk_to_parent_of(value, node)
     return if node.nil? || node.a_leaf?
 
-    if node.left.data == value
-      if node.left.a_leaf?
-        node.left = nil
-      elsif node.left.only_left_child?
-        node.left = node.left.left
-      elsif node.left.only_right_child?
-        node.left = node.left.right
-      else
-        # go to right subtree
-        right_subtree = node.left.right
-        # find the smallest value in the right subtree, call it lub
-        right_subtree = right_subtree.left until right_subtree.left.nil?
-        lub = right_subtree.data
-        # delete lub from the right subtree
+    if node.data == value
+      lub = smallest(node.right)
+      delete(lub, node.right)
+      node.data = lub
+    elsif node.left.data == value
+      if node.left.two_children?
+        lub = smallest(node.left.right)
         delete(lub, node.left)
-        # replace left data of current node with lub
         node.left.data = lub
+      else
+        node.left = node.left.a_leaf? ? nil : delete_single_child(node.left)
       end
     elsif node.right.data == value
       if node.right.a_leaf?
@@ -66,25 +60,25 @@ class Tree
       elsif node.right.only_right_child?
         node.right = node.right.right
       else
-        # go to right subtree
-        right_subtree = node.right.right
-        # find the smallest value in the right subtree, call it lub
-        right_subtree = right_subtree.left until right_subtree.left.nil?
-        lub = right_subtree.data
-        # delete lub from the right subtree
+        lub = smallest(node.right.right)
         delete(lub, node.right)
-        # replace left data of current node with lub
         node.right.data = lub
       end
     end
   end
 
+  def delete_single_child(node)
+    node.only_left_child? ? node.left : node.right
+  end
+
+  def smallest(node)
+    node = node.left until node.left.nil?
+    node.data
+  end
+
   def walk_to_parent_of(value, node)
-    unless node.nil? || node.a_leaf? || node.data == value
-      until node.left.data == value || node.right.data == value
-        node = value < node.data ? node.left : node.right
-        return if node.nil? || node.a_leaf?
-      end
+    until node.nil? || node.a_leaf? || node.data == value || node.child_data?(value)
+      node = value < node.data ? node.left : node.right
     end
     node
   end
@@ -94,5 +88,4 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
-
 end

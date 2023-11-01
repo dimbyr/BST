@@ -23,4 +23,16 @@ class Node
   def two_children?
     @left && @right
   end
+
+  def child_data?(value)
+    if two_children?
+      @left.data == value || @right.data == value
+    elsif only_left_child?
+      @left.data == value
+    elsif only_right_child?
+      @right.data == value
+    else
+      false
+    end
+  end
 end
