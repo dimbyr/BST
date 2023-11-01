@@ -1,4 +1,5 @@
-class Node 
+# A node of a binary tree
+class Node
   attr_accessor :data, :left, :right
 
   def initialize(value = nil, left = nil, right = nil)
@@ -17,5 +18,9 @@ class Node
 
   def only_right_child?
     @left.nil? && @right
+  end
+
+  def two_children?
+    @left && @right
   end
 end

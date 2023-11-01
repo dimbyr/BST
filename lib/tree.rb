@@ -36,6 +36,25 @@ class Tree
     end
   end
 
+  def delete(value)
+    node = @root
+    node = node.data >= value ? node.left : node.right until node.nil? || node.a_leaf? || node.data == value
+    return if node.nil?
+    
+    if node.two_children?
+      replacement = node.right
+      replacement = replacement.left until replacement.only_right_child? || replacement.a_leaf?
+      node.data = replacement.data
+      delete(replacement.data)
+    elsif node.a_leaf?
+      node = nil
+    elsif node.only_left_child?
+      node = node.left
+    else
+      node = node.right
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
