@@ -24,6 +24,14 @@ class Node
     @left && @right
   end
 
+  def left_data?(value)
+    @left && @left.data == value
+  end
+
+  def right_data?(value)
+    @right && @right.data == value
+  end
+
   def child_data?(value)
     if two_children?
       @left.data == value || @right.data == value

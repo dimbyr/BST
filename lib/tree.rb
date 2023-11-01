@@ -44,27 +44,42 @@ class Tree
       lub = smallest(node.right)
       delete(lub, node.right)
       node.data = lub
-    elsif node.left.data == value
-      if node.left.two_children?
-        lub = smallest(node.left.right)
-        delete(lub, node.left)
-        node.left.data = lub
+    elsif node.child_data?(value)
+      target_node = node.left_data?(value) ? node.left : node.right
+      if target_node.a_leaf? 
+        node.left = nil if node.left_data?(value)
+        node.right = nil if node.right_data?(value)
+      elsif target_node.only_left_child? || target_node.only_right_child?
+        upd = delete_single_child(target_node)
+        node.left = upd if node.left_data(value)
+        node.right = upd if node.right_data(value)
       else
-        node.left = node.left.a_leaf? ? nil : delete_single_child(node.left)
-      end
-    elsif node.right.data == value
-      if node.right.a_leaf?
-        node.right = nil
-      elsif node.right.only_left_child?
-        node.right = node.left.left
-      elsif node.right.only_right_child?
-        node.right = node.right.right
-      else
-        lub = smallest(node.right.right)
-        delete(lub, node.right)
-        node.right.data = lub
+        lub = smallest(target_node.right)
+        delete(lub)
+        node.left.data = lub if node.left_data?(vlaue)
+        node.right.data = lub if node.right_data?(value)
       end
     end
+    #   if node.left.two_children?
+    #     lub = smallest(node.left.right)
+    #     delete(lub, node.left)
+    #     node.left.data = lub
+    #   else
+    #     node.left = node.left.a_leaf? ? nil : delete_single_child(node.left)
+    #   end
+    # elsif node.right.data == value
+    #   if node.right.a_leaf?
+    #     node.right = nil
+    #   elsif node.right.only_left_child?
+    #     node.right = node.left.left
+    #   elsif node.right.only_right_child?
+    #     node.right = node.right.right
+    #   else
+    #     lub = smallest(node.right.right)
+    #     delete(lub, node.right)
+    #     node.right.data = lub
+    #   end
+    # end
   end
 
   def delete_single_child(node)
