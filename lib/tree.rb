@@ -109,14 +109,20 @@ class Tree
   end
 
   def delete(value, node = @root)
-    node = walk_to_parent_of(value, node)
-    return if node.nil? || node.a_leaf?
+    return if find(value).nil?
 
+    node = walk_to_parent_of(value, node)
     if node.data == value
       delete_root(node)
     elsif node.child_data?(value)
       delete_child(node, value)
     end
+  end
+
+  def find(value)
+    node = @root
+    node = value < node.data ? node.left : node.right until node.nil? || node.data == value
+    node
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)

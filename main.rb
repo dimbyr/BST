@@ -33,5 +33,18 @@ puts 'deleting 999'
 tree.delete(999)
 tree.pretty_print
 puts sep
+
+puts 'let us try to delete something non present like 9999'
+tree.delete(9999)
+tree.pretty_print
+puts sep
+
+puts 'searching for 999'
+p tree.find(999)
+puts sep
+
+puts 'searching for 8'
+puts tree.find(8)
+puts sep
 # bst.pretty_print()
 # pretty_print(bst)
