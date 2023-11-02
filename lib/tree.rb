@@ -125,6 +125,22 @@ class Tree
     node
   end
 
+  # def level_order(node = @root)
+  #   return if node.nil?
+  #   # q = []
+  #   # q << node
+  #   yield node.data
+  #   if node.left
+  #     # q << node.left 
+  #     level_order(node.left)
+  #   end
+  #   if node.right
+  #     # q << node.right if node.right
+  #     level_order(node.right)
+  #   end
+  #   # q.shift
+  # end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -142,5 +158,24 @@ class Tree
     right_half = lst[(halflen + 1)..]
     root = Node.new(lst[halflen])
     [root, left_half, right_half]
+  end
+end
+
+
+# This might be for "depth first"
+# It still suffer from "no block given"
+def level_order(node)
+  return if node.nil?
+  q = []
+  q << node
+  puts node.data
+  yield node.data if block_given?
+  if node.left
+    q << node.left 
+    level_order(q.shift)
+  end
+  if node.right
+    q << node.right if node.right
+    level_order(q.shift)
   end
 end
