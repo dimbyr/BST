@@ -170,6 +170,37 @@ class Tree
     @post_order_list unless block_given?
   end
 
+  def height(node = @root)
+    return 0 if node.nil?
+
+    left_hight = height(node.left)
+    right_hight = height(node.right)
+    1 + [left_hight, right_hight].max
+  end
+
+  def depth(node)
+    d = 0
+    start = @root
+    value = node.data
+    until start.nil? || start.data == value
+      start = value < start.data ? start.left : start.right 
+      d += 1
+    end
+    start.nil? ? 'Not found' : d
+  end
+
+  def balanced?(node = @root)
+    return true if node.nil?
+
+    left = node.left
+    right = node.right
+    left_hight = height(left)
+    right_hight = height(right)
+    return false if (left_hight - right_hight).abs > 1
+
+    true && balanced?(left) && balanced?(right)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"

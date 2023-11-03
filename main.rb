@@ -63,3 +63,24 @@ puts sep
 puts 'Testing #post_order'
 p tree.post_order # { |x| puts x }
 puts sep
+
+puts 'What is the #hight of the tree?'
+p tree.height # { |x| puts x }
+puts sep
+
+node = tree.root.left.right
+puts "What is the #depth of the #{node.data}?"
+p tree.depth(node) # { |x| puts x }
+puts sep
+
+puts 'Is our tree #balanced?'
+p tree.balanced? # { |x| puts x }
+puts sep
+
+k= 9999
+puts "Now, let's insert #{k}"
+tree.insert(k)
+tree.pretty_print
+puts 'Is it still #balanced?'
+p tree.balanced? # { |x| puts x }
+puts sep
