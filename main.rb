@@ -77,9 +77,11 @@ puts 'Is our tree #balanced?'
 p tree.balanced? # { |x| puts x }
 puts sep
 
-k= 9999
-puts "Now, let's insert #{k}"
-tree.insert(k)
+
+puts "Now, let's change some values"
+tree.insert(99)
+tree.insert(98)
+tree.delete(6345)
 tree.pretty_print
 puts 'Is it still #balanced?'
 p tree.balanced? # { |x| puts x }
