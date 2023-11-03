@@ -77,7 +77,6 @@ puts 'Is our tree #balanced?'
 p tree.balanced? # { |x| puts x }
 puts sep
 
-
 puts "Now, let's change some values"
 tree.insert(99)
 tree.insert(98)
@@ -85,4 +84,11 @@ tree.delete(6345)
 tree.pretty_print
 puts 'Is it still #balanced?'
 p tree.balanced? # { |x| puts x }
+puts sep
+
+puts 'Lets #rebalance it'
+tree.rebalance
+tree.pretty_print
+puts 'Is it balanced?'
+p tree.balanced?
 puts sep
