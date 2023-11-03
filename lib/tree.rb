@@ -85,6 +85,51 @@ module Insertable
   end
 end
 
+# Tree traversal methods
+module Traversable
+  def level_order(node = @root)
+    q = []
+    res = []
+    q << node if node
+    until q.empty?
+      data = enqueue(q.first, q)
+      block_given? ? (yield data) : (res << data)
+      q.shift
+    end
+    res unless block_given?
+  end
+
+  def in_order(node = @root)
+    return if node.nil?
+
+    data = node.data
+    in_order(node.left) if node.left
+    block_given? ? (yield data) : (@in_order_list << data)
+    in_order(node.right) if node.right
+    @in_order_list unless block_given?
+  end
+
+  def pre_order(node = @root)
+    return if node.nil?
+
+    data = node.data
+    block_given? ? (yield data) : (@pre_order_list << data)
+    pre_order(node.left) if node.left
+    pre_order(node.right) if node.right
+    @pre_order_list unless block_given?
+  end
+
+  def post_order(node = @root)
+    return if node.nil?
+
+    data = node.data
+    post_order(node.left) if node.left
+    post_order(node.right) if node.right
+    block_given? ? (yield data) : (@post_order_list << data)
+    @post_order_list unless block_given?
+  end
+end
+
 # This class build a balanced binary search tree from a list
 class Tree
   attr_accessor :root, :in_order_list, :pre_order_list, :post_order_list
@@ -130,47 +175,7 @@ class Tree
     node
   end
 
-  def level_order(node = @root)
-    q = []
-    res = []
-    q << node if node
-    until q.empty?
-      data = enqueue(q.first, q)
-      block_given? ? (yield data) : (res << data)
-      q.shift
-    end
-    res unless block_given?
-  end
-
-  def in_order(node = @root)
-    return if node.nil?
-
-    data = node.data
-    in_order(node.left) if node.left
-    block_given? ? (yield data) : (@in_order_list << data)
-    in_order(node.right) if node.right
-    @in_order_list unless block_given?
-  end
-
-  def pre_order(node = @root)
-    return if node.nil?
-
-    data = node.data
-    block_given? ? (yield data) : (@pre_order_list << data)
-    pre_order(node.left) if node.left
-    pre_order(node.right) if node.right
-    @pre_order_list unless block_given?
-  end
-
-  def post_order(node = @root)
-    return if node.nil?
-
-    data = node.data
-    post_order(node.left) if node.left
-    post_order(node.right) if node.right
-    block_given? ? (yield data) : (@post_order_list << data)
-    @post_order_list unless block_given?
-  end
+  include Traversable
 
   def height(node = @root)
     return 0 if node.nil?
