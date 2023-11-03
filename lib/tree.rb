@@ -87,11 +87,13 @@ end
 
 # This class build a balanced binary search tree from a list
 class Tree
-  attr_accessor :root, :in_order_list
+  attr_accessor :root, :in_order_list, :pre_order_list, :post_order_list
 
   def initialize(list)
     @root = build_tree(list.uniq.sort)
     @in_order_list = []
+    @pre_order_list = []
+    @post_order_list = []
   end
 
   def build_tree(lst)
@@ -126,8 +128,7 @@ class Tree
     node
   end
 
-  def level_order
-    node = @root
+  def level_order(node = @root)
     q = []
     res = []
     q << node if node
@@ -149,12 +150,24 @@ class Tree
     @in_order_list unless block_given?
   end
 
-  def enqueue(current_node, queue)
-    left = current_node.left
-    right = current_node.right
-    queue << left if left
-    queue << right if right
-    current_node.data
+  def pre_order(node = @root)
+    return if node.nil?
+
+    data = node.data
+    block_given? ? (yield data) : (@pre_order_list << data)
+    pre_order(node.left) if node.left
+    pre_order(node.right) if node.right
+    @pre_order_list unless block_given?
+  end
+
+  def post_order(node = @root)
+    return if node.nil?
+
+    data = node.data
+    post_order(node.left) if node.left
+    post_order(node.right) if node.right
+    block_given? ? (yield data) : (@post_order_list << data)
+    @post_order_list unless block_given?
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -174,5 +187,13 @@ class Tree
     right_half = lst[(halflen + 1)..]
     root = Node.new(lst[halflen])
     [root, left_half, right_half]
+  end
+
+  def enqueue(current_node, queue)
+    left = current_node.left
+    right = current_node.right
+    queue << left if left
+    queue << right if right
+    current_node.data
   end
 end

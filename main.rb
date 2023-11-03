@@ -49,9 +49,17 @@ puts tree.find(8)
 puts sep
 
 puts 'Testing #level_order'
-p tree.level_order #{ |x| puts x }
+p tree.level_order # { |x| puts x }
 puts sep
 
 puts 'Testing #in_order'
-p tree.in_order #{ |x| puts x }
+p tree.in_order # { |x| puts x }
+puts sep
+
+puts 'Testing #pre_order'
+p tree.pre_order # { |x| puts x }
+puts sep
+
+puts 'Testing #post_order'
+p tree.post_order # { |x| puts x }
 puts sep
