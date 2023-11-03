@@ -48,7 +48,6 @@ puts 'searching for 8'
 puts tree.find(8)
 puts sep
 
-# puts "Testing #level_order"
-
-# level_order(tree.root)
-# puts sep
+puts 'Testing #level_order'
+p tree.level_order #{ |x| puts x }
+puts sep

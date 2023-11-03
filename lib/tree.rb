@@ -125,21 +125,26 @@ class Tree
     node
   end
 
-  # def level_order(node = @root)
-  #   return if node.nil?
-  #   # q = []
-  #   # q << node
-  #   yield node.data
-  #   if node.left
-  #     # q << node.left 
-  #     level_order(node.left)
-  #   end
-  #   if node.right
-  #     # q << node.right if node.right
-  #     level_order(node.right)
-  #   end
-  #   # q.shift
-  # end
+  def level_order
+    node = @root
+    q = []
+    res = []
+    q << node if node
+    until q.empty?
+      data = enqueue(q.first, q)
+      block_given? ? (yield data) : (res << data)
+      q.shift
+    end
+    res unless block_given?
+  end
+
+  def enqueue(current_node, queue)
+    left = current_node.left
+    right = current_node.right
+    queue << left if left
+    queue << right if right
+    current_node.data
+  end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -162,20 +167,20 @@ class Tree
 end
 
 
-# This might be for "depth first"
-# It still suffer from "no block given"
-def level_order(node)
-  return if node.nil?
-  q = []
-  q << node
-  puts node.data
-  yield node.data if block_given?
-  if node.left
-    q << node.left 
-    level_order(q.shift)
-  end
-  if node.right
-    q << node.right if node.right
-    level_order(q.shift)
-  end
-end
+# # This might be for "depth first"
+# # It still suffer from "no block given"
+# def depth_first(node)
+#   return if node.nil?
+#   q = []
+#   q << node
+#   puts node.data
+#   yield node.data if block_given?
+#   if node.left
+#     q << node.left 
+#     level_order(node.left)
+#   end
+#   if node.right
+#     q << node.right if node.right
+#     level_order(node.right)
+#   end
+# end
