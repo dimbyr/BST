@@ -51,3 +51,7 @@ puts sep
 puts 'Testing #level_order'
 p tree.level_order #{ |x| puts x }
 puts sep
+
+puts 'Testing #in_order'
+p tree.in_order #{ |x| puts x }
+puts sep

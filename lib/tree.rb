@@ -87,10 +87,11 @@ end
 
 # This class build a balanced binary search tree from a list
 class Tree
-  attr_accessor :root
+  attr_accessor :root, :in_order_list
 
   def initialize(list)
     @root = build_tree(list.uniq.sort)
+    @in_order_list = []
   end
 
   def build_tree(lst)
@@ -138,6 +139,16 @@ class Tree
     res unless block_given?
   end
 
+  def in_order(node = @root)
+    return if node.nil?
+
+    data = node.data
+    in_order(node.left) if node.left
+    block_given? ? (yield data) : (@in_order_list << data)
+    in_order(node.right) if node.right
+    @in_order_list unless block_given?
+  end
+
   def enqueue(current_node, queue)
     left = current_node.left
     right = current_node.right
@@ -165,22 +176,3 @@ class Tree
     [root, left_half, right_half]
   end
 end
-
-
-# # This might be for "depth first"
-# # It still suffer from "no block given"
-# def depth_first(node)
-#   return if node.nil?
-#   q = []
-#   q << node
-#   puts node.data
-#   yield node.data if block_given?
-#   if node.left
-#     q << node.left 
-#     level_order(node.left)
-#   end
-#   if node.right
-#     q << node.right if node.right
-#     level_order(node.right)
-#   end
-# end
