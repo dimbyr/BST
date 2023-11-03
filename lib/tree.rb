@@ -108,6 +108,8 @@ class Tree
   end
 
   def insert(value, node = @root)
+    # check this method again? it seems to fail adding successive numbers 
+    # like 99, 98, 97 ? strange
     insert_value(value, node)
   end
 
