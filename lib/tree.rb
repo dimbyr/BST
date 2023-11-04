@@ -141,6 +141,10 @@ class Tree
     @post_order_list = []
   end
 
+  include Deletable
+  include Insertable
+  include Traversable
+
   def build_tree(lst)
     n = lst.length
     return nil if lst.nil? || n.zero?
@@ -174,8 +178,6 @@ class Tree
     node = value < node.data ? node.left : node.right until node.nil? || node.data == value
     node
   end
-
-  include Traversable
 
   def height(node = @root)
     return 0 if node.nil?
@@ -220,9 +222,6 @@ class Tree
   end
 
   private
-
-  include Deletable
-  include Insertable
 
   def halves(lst)
     halflen = lst.length / 2
